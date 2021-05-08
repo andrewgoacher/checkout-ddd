@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Kata.Domain.Checkout.Events;
 using Kata.Domain.Core;
 
@@ -6,10 +8,13 @@ namespace Kata.Domain.Checkout
 {
     public class Basket : AggregateRoot<BasketId>
     {
+        private readonly List<Item> _items;
         private Basket() : base()
         {
-            
+            _items = new List<Item>();
         }
+
+        public IEnumerable<Item> GetItems() => _items.AsEnumerable();
 
         public static Basket Create()
         {
