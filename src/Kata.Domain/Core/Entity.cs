@@ -2,13 +2,10 @@ using System;
 
 namespace Kata.Domain.Core
 {
-    public abstract class Event<TId>
+    public abstract class Entity<TId>
     {
-        private readonly Action<object> _applyFunc;
-
-        protected Event(Action<object> applyFunc)
+        protected Entity()
         {
-            _applyFunc = applyFunc;
         }
 
         public TId Id { get; protected set; }
@@ -16,7 +13,6 @@ namespace Kata.Domain.Core
         protected void Apply(object @event)
         {
             OnApply(@event);
-            _applyFunc(@event);
         }
 
         protected abstract void OnApply(object @event);

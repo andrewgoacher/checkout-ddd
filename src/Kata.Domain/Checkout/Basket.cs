@@ -4,7 +4,7 @@ using Kata.Domain.Core;
 
 namespace Kata.Domain.Checkout
 {
-    public class Basket : AggregateRoot
+    public class Basket : AggregateRoot<BasketId>
     {
         private Basket() : base()
         {
@@ -14,22 +14,20 @@ namespace Kata.Domain.Checkout
         public static Basket Create()
         {
             var basket = new Basket();
-            basket.Apply(new NewBasket
+            basket.Apply(new BasketEvents.NewBasket
             {
                 Id = Guid.NewGuid()
             });
             return basket;
         }
         
-        public BasketId BasketId { get; private set; }
-        
         protected override void OnApply(object @event)
         {
             switch (@event)
             {
-                case NewBasket nb:
+                case BasketEvents.NewBasket nb:
                 {
-                    BasketId = new BasketId(nb.Id);
+                    Id = new BasketId(nb.Id);
                     break;
                 }
             }
@@ -37,9 +35,9 @@ namespace Kata.Domain.Checkout
 
         protected override void EnsureValidState()
         {
-            if (BasketId == null)
+            if (Id == null)
             {
-                throw new InvalidBasketException("BasketId");
+                throw new InvalidBasketException("Id");
             }
         }
     }
