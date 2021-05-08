@@ -8,5 +8,11 @@ namespace Kata.Domain.Checkout.Events
         {
             public Guid Id { get; set; }
         }
+        
+        public sealed class AddItem
+        {
+            public string ItemId {get;set; }
+            public decimal Price {get; set;}
+        }
     }
 }

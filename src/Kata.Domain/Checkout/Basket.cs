@@ -1,24 +1,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Kata.Domain.Checkout.Events;
 using Kata.Domain.Core;
+using Kata.Domain.Services;
 
 namespace Kata.Domain.Checkout
 {
     public class Basket : AggregateRoot<BasketId>
     {
+        private readonly IItemService _itemService;
+        
         private readonly List<Item> _items;
-        private Basket() : base()
+        private Basket(IItemService itemService) : base()
         {
+            _itemService = itemService;
+            
             _items = new List<Item>();
         }
 
         public IEnumerable<Item> GetItems() => _items.AsEnumerable();
 
-        public static Basket Create()
+        public async Task AddItemAsync(ItemId itemId)
         {
-            var basket = new Basket();
+            var item = await _itemService.FetchItemAsync(itemId);
+            Apply(new BasketEvents.AddItem()
+            {
+                ItemId = itemId,
+                Price = item.Price
+            });
+        }
+
+        public static Basket Create(IItemService itemService)
+        {
+            var basket = new Basket(itemService);
             basket.Apply(new BasketEvents.NewBasket
             {
                 Id = Guid.NewGuid()
@@ -33,6 +49,11 @@ namespace Kata.Domain.Checkout
                 case BasketEvents.NewBasket nb:
                 {
                     Id = new BasketId(nb.Id);
+                    break;
+                }
+                case BasketEvents.AddItem ai:
+                {
+                    _items.Add(Item.NewItem(this, new (ai.ItemId), new (ai.Price)));
                     break;
                 }
             }

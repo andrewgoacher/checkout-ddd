@@ -1,5 +1,6 @@
 using Kata.Domain.Checkout;
 using Kata.Domain.Shared;
+using Kata.Domain.UnitTests.Services;
 using Xunit;
 
 namespace Kata.Domain.UnitTests.Checkout
@@ -9,7 +10,7 @@ namespace Kata.Domain.UnitTests.Checkout
         [Fact]
         public void NewItem_HasCorrectValues()
         {
-            var basket = Basket.Create();
+            var basket = Basket.Create(new ItemServiceStub());
             var itemId = new ItemId("Item Id");
             var price = new Price(100);
 
