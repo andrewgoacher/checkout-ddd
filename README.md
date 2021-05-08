@@ -28,9 +28,22 @@ All carrier bags are charged at the price of 5 per bag, except in Wales where ba
 
 ## Tasks
 
-- [ ] Add Swagger Docs for API
+- [x] Add Swagger Docs for API
 - [ ] Create Domain layer
 - [ ] Add persistence
 - [ ] Add API Layer
 
-    
+## Thought Process
+
+* Going to try and use some of the concepts I've learned from the DDD book I'm reading.
+I'm going to stick to a relatively basic pattern because I haven't finished the book and I'm not going to fully realise all the patterns.
+  
+* Ignoring special discounts for now.
+  Adding **Items** to a **Basket** seems a good start.
+  * Items have a **name** and a **price**
+  * Basket will keep a running of the cost of the items
+  * Baket should be able to **add** and **remove** items  
+  I like some of the command concepts but at the moment I'm not comfortable building a cQS/CQRS style API
+  So for now I'm going to take the Event/Handling style code from the book but not necessarily have commands.    
+  Will see how it goes.  
+
