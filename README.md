@@ -25,3 +25,12 @@ All carrier bags are charged at the price of 5 per bag, except in Wales where ba
 
 * Refamiliarize yourself with the patterns and tools available in .NET Core e.g., middleware, Filters etc before hand cranking a solution when a canonical solution exists.
 * Document a best practice vanilla solution for .NET 5 API which covers key areas in brief (Documented OpenAPI, extensible, testable, secure, extensibility, reusability…).
+
+## Tasks
+
+- [ ] Add Swagger Docs for API
+- [ ] Create Domain layer
+- [ ] Add persistence
+- [ ] Add API Layer
+
+    
