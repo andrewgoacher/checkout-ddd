@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Kata.Domain.Checkout.Events;
 using Kata.Domain.Core;
 using Kata.Domain.Services;
+using Kata.Domain.Shared;
 
 namespace Kata.Domain.Checkout
 {
@@ -21,6 +22,8 @@ namespace Kata.Domain.Checkout
         }
 
         public IEnumerable<Item> GetItems() => _items.AsEnumerable();
+
+        public Money GetTotal() => new Money(_items.Sum(x => x.Price));
 
         public async Task AddItemAsync(ItemId itemId)
         {

@@ -20,7 +20,7 @@ namespace Kata.Domain.UnitTests.Checkout
         {
             var basket = Basket.Create(new ItemServiceStub());
             await basket.AddItemAsync(new ItemId("A"));
-            
+
             Assert.NotEmpty(basket.GetItems());
         }
 
@@ -38,6 +38,27 @@ namespace Kata.Domain.UnitTests.Checkout
 
             Assert.Equal(expectedItem.Id, actualItem.Id);
             Assert.Equal(expectedItem.Price, actualItem.Price);
+        }
+
+        [Fact]
+        public async Task Basket_AddItem_HasCorretTotal()
+        {
+            var basket = Basket.Create(new ItemServiceStub());
+            await basket.AddItemAsync(new ItemId("A"));
+
+            Assert.Equal(50m, basket.GetTotal());
+        }
+
+        [Fact]
+        public async Task Basket_AddItems_HasCorrectTotal()
+        {
+            var basket = Basket.Create(new ItemServiceStub());
+            await basket.AddItemAsync(new ItemId("A"));
+            await basket.AddItemAsync(new ItemId("B"));
+            await basket.AddItemAsync(new ItemId("C"));
+            await basket.AddItemAsync(new ItemId("D"));
+
+            Assert.Equal(115m, basket.GetTotal());
         }
     }
 }
