@@ -16,6 +16,8 @@ namespace Kata.Domain.Checkout
 
         public event EventHandler<BasketEvents.NewBasket> NewBasketCreated;
         public event EventHandler<BasketEvents.AddItem> ItemAdded;
+        public event EventHandler<(ItemId, Quantity)> ItemQuantityUpdated;
+        public event EventHandler<ItemId> ItemRemoved;
 
         private Basket(IItemService itemService) : base()
         {
@@ -92,12 +94,22 @@ namespace Kata.Domain.Checkout
                     {
                         var item = _items.Single(x => x.Id == aiq.ItemId);
                         item.IncrementQuantity(new(aiq.Quantity));
+                        ItemQuantityUpdated?.Invoke(this, (item.Id, item.Quantity));
                         break;
                     }
                 case BasketEvents.RemoveItemQuantity ri:
                     {
                         var item = _items.Single(x => x.Id == ri.ItemId);
                         item.DecrementQuantity(new(ri.Quantity));
+                        if (item.Quantity == 0)
+                        {
+                            _items.Remove(item);
+                            ItemRemoved?.Invoke(this, item.Id);
+                        }
+                        else
+                        {
+                            ItemQuantityUpdated?.Invoke(this, (item.Id, item.Quantity));
+                        }
                         break;
                     }
             }

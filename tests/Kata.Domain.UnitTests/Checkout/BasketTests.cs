@@ -95,5 +95,15 @@ namespace Kata.Domain.UnitTests.Checkout
             var item = basket.GetItems().Single();
             Assert.Equal(1, item.Quantity);
         }
+
+        [Fact]
+        public async Task Basket_RemoveAllQuantity_RemovesItemFromBasket()
+        {
+            var basket = Basket.Create(new ItemServiceStub());
+            await basket.AddItemAsync(new("A"), new(2));
+            basket.RemoveItem(new("A"), new(2));
+
+            Assert.Empty(basket.GetItems());
+        }
     }
 }
