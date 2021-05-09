@@ -121,6 +121,11 @@ namespace Kata.Domain.Checkout
             {
                 throw new InvalidBasketException("Id");
             }
+
+            if (_items.Any(x => x.Quantity == 0))
+            {
+                throw new InvalidBasketException("Empty Item");
+            }
         }
     }
 }
