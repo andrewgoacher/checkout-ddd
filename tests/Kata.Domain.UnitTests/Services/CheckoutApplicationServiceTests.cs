@@ -32,5 +32,19 @@ namespace Kata.Domain.UnitTests.Services
                 await service.AddItemAsync(new BasketId(Guid.NewGuid()), new("A"), new(1));
             });
         }
+
+        [Fact]
+        public async Task CheckoutApplicationService_AddItem_AddsItem()
+        {
+            var store = new BasketStoreFake();
+            var service = new CheckoutApplicationService(new ItemServiceStub(), store);
+            var basketId = await service.CreateBasket();
+
+            await service.AddItemAsync(basketId, new("A"), new(1));
+
+            var basket = await store.GetBasketAsync(basketId);
+            var items = basket.GetItems();
+            Assert.NotNull(items);
+        }
     }
 }

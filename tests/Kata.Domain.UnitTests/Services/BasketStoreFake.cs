@@ -18,6 +18,16 @@ namespace Kata.Domain.UnitTests.Services
             return Task.FromResult(_basket != null && id == _basket.Id);
         }
 
+        public Task<Basket> GetBasketAsync(BasketId id)
+        {
+            if (_basket != null && _basket.Id == id)
+            {
+                return Task.FromResult(_basket);
+            }
+
+            throw new InvalidOperationException("Invalid test input");
+        }
+
         public Task StoreBasketAsync(Basket basket)
         {
             _basket = basket;

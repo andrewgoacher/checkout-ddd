@@ -8,5 +8,6 @@ namespace Kata.Domain.Services
     {
         Task StoreBasketAsync(Basket basket);
         Task<bool> ExistsAsync(BasketId id);
+        Task<Basket> GetBasketAsync(BasketId id);
     }
 }
