@@ -56,5 +56,18 @@ namespace Kata.Domain.UnitTests.Shared
 
             Assert.Equal(10 + increment, newQuantity);
         }
+
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Quantity_DecrementBy_ReturnsAmountLess(int decrement)
+        {
+            var original = new Quantity(10);
+            var newQuantity = original.DecrementBy(new Quantity(decrement));
+
+            Assert.Equal(10 - decrement, newQuantity);
+        }
     }
 }

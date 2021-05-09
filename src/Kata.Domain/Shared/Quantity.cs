@@ -24,6 +24,11 @@
             return new(_value + amount._value);
         }
 
+        public Quantity DecrementBy(Quantity amount)
+        {
+            return new(_value - amount._value);
+        }
+
         public static implicit operator int(Quantity qty) => qty._value;
     }
 }

@@ -11,5 +11,15 @@ namespace Kata.Domain.Checkout.Events
             public decimal Price { get; set; }
             public int Quantity { get; set; }
         }
+
+        public class IncrementQuantity
+        {
+            public int Amount { get; set; }
+        }
+
+        public class DecrementQuantity
+        {
+            public int Amount { get; set; }
+        }
     }
 }
