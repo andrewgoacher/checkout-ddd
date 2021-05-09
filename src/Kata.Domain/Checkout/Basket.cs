@@ -20,7 +20,7 @@ namespace Kata.Domain.Checkout
         private Basket(IItemService itemService) : base()
         {
             _itemService = itemService;
-            
+
             _items = new List<Item>();
         }
 
@@ -30,12 +30,35 @@ namespace Kata.Domain.Checkout
 
         public async Task AddItemAsync(ItemId itemId, Quantity qty)
         {
-            var item = await _itemService.FetchItemAsync(itemId);
-            Apply(new BasketEvents.AddItem()
+            var exists = _items.Exists(x => x.Id == itemId);
+
+            if (exists)
+            {
+                Apply(new BasketEvents.AddItemQuantity()
+                {
+                    ItemId = itemId,
+                    Quantity = qty
+                });
+            }
+            else
+            {
+
+                var item = await _itemService.FetchItemAsync(itemId);
+                Apply(new BasketEvents.AddItem()
+                {
+                    ItemId = itemId,
+                    Price = item.Price,
+                    Quantity = qty
+                });
+            }
+        }
+
+        public void RemoveItem(ItemId itemId, Quantity quantity)
+        {
+            Apply(new BasketEvents.RemoveItemQuantity
             {
                 ItemId = itemId,
-                Price = item.Price,
-                Quantity = qty
+                Quantity = quantity
             });
         }
 
@@ -48,23 +71,35 @@ namespace Kata.Domain.Checkout
             });
             return basket;
         }
-        
+
         protected override void OnApply(object @event)
         {
             switch (@event)
             {
                 case BasketEvents.NewBasket nb:
-                {
-                    Id = new BasketId(nb.Id);
-                    NewBasketCreated?.Invoke(this, nb);
-                    break;
-                }
+                    {
+                        Id = new BasketId(nb.Id);
+                        NewBasketCreated?.Invoke(this, nb);
+                        break;
+                    }
                 case BasketEvents.AddItem ai:
-                {
-                    _items.Add(Item.NewItem(this, new (ai.ItemId), new (ai.Price), new(ai.Quantity)));
-                     ItemAdded?.Invoke(this, ai);
-                    break;
-                }
+                    {
+                        _items.Add(Item.NewItem(this, new(ai.ItemId), new(ai.Price), new(ai.Quantity)));
+                        ItemAdded?.Invoke(this, ai);
+                        break;
+                    }
+                case BasketEvents.AddItemQuantity aiq:
+                    {
+                        var item = _items.Single(x => x.Id == aiq.ItemId);
+                        item.IncrementQuantity(new(aiq.Quantity));
+                        break;
+                    }
+                case BasketEvents.RemoveItemQuantity ri:
+                    {
+                        var item = _items.Single(x => x.Id == ri.ItemId);
+                        item.DecrementQuantity(new(ri.Quantity));
+                        break;
+                    }
             }
         }
 

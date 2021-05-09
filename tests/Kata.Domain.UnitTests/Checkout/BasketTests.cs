@@ -73,5 +73,27 @@ namespace Kata.Domain.UnitTests.Checkout
 
             Assert.Equal(expectedTotal, basket.GetTotal());
         }
+
+        [Fact]
+        public async Task Basket_AddItemMultipleTimes_HasCorrectQuantity()
+        {
+            var basket = Basket.Create(new ItemServiceStub());
+            await basket.AddItemAsync(new("A"), new(1));
+            await basket.AddItemAsync(new("A"), new(1));
+
+            var item = basket.GetItems().Single();
+            Assert.Equal(2, item.Quantity);
+        }
+
+        [Fact]
+        public async Task Basket_RemoveQuantityOfItem_HasCorrectQuantity()
+        {
+            var basket = Basket.Create(new ItemServiceStub());
+            await basket.AddItemAsync(new("A"), new(2));
+            basket.RemoveItem(new("A"), new(1));
+
+            var item = basket.GetItems().Single();
+            Assert.Equal(1, item.Quantity);
+        }
     }
 }

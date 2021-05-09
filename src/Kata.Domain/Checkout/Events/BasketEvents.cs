@@ -15,5 +15,17 @@ namespace Kata.Domain.Checkout.Events
             public decimal Price {get; set;}
             public int Quantity { get; set; }
         }
+
+        public sealed class AddItemQuantity
+        {
+            public string ItemId { get; set; }
+            public int Quantity { get; set; }
+        }
+
+        public sealed class RemoveItemQuantity
+        {
+            public string ItemId { get; set; }
+            public int Quantity { get; set; }
+        }
     }
 }
