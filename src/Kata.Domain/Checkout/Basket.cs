@@ -12,8 +12,11 @@ namespace Kata.Domain.Checkout
     public class Basket : AggregateRoot<BasketId>
     {
         private readonly IItemService _itemService;
-        
         private readonly List<Item> _items;
+
+        public event EventHandler<BasketEvents.NewBasket> NewBasketCreated;
+        public event EventHandler<BasketEvents.AddItem> ItemAdded;
+
         private Basket(IItemService itemService) : base()
         {
             _itemService = itemService;
@@ -52,11 +55,13 @@ namespace Kata.Domain.Checkout
                 case BasketEvents.NewBasket nb:
                 {
                     Id = new BasketId(nb.Id);
+                    NewBasketCreated?.Invoke(this, nb);
                     break;
                 }
                 case BasketEvents.AddItem ai:
                 {
                     _items.Add(Item.NewItem(this, new (ai.ItemId), new (ai.Price)));
+                     ItemAdded?.Invoke(this, ai);
                     break;
                 }
             }
