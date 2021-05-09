@@ -1,29 +1,33 @@
+using System.Threading.Tasks;
 using Kata.Domain.Checkout;
+using Kata.Domain.Shared;
 
 namespace Kata.Domain.Services
 {
     public class CheckoutApplicationService
     {
         private readonly IItemService _itemService;
+        private readonly IBasketStore _basketStore;
 
-        private Basket _basket;
-
-        public CheckoutApplicationService(IItemService itemService)
+        public CheckoutApplicationService(IItemService itemService, IBasketStore basketStore)
         {
             _itemService = itemService;
+            _basketStore = basketStore;
         }
 
-        public BasketId CreateBasket()
+        public async Task<BasketId> CreateBasket()
         {
-            // todo: Remove opportunity for null;
+            var basket = Basket.Create(_itemService);
+            await _basketStore.StoreBasketAsync(basket);
+            return basket.Id;
+        }
 
-            if (_basket != null)
+        public async Task AddItemAsync(BasketId basketId, ItemId itemId, Quantity qty)
+        {
+            if (!await _basketStore.ExistsAsync(basketId))
             {
-                throw new BasketExistsException();
+                throw new BasketNotFoundException();
             }
-
-            _basket = Basket.Create(_itemService);
-            return _basket.Id;
         }
     }
 }

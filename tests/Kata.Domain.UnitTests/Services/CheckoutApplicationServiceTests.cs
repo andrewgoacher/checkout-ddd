@@ -1,4 +1,6 @@
-﻿using Kata.Domain.Checkout;
+﻿using System;
+using System.Threading.Tasks;
+using Kata.Domain.Checkout;
 using Kata.Domain.Services;
 using Xunit;
 
@@ -11,25 +13,23 @@ namespace Kata.Domain.UnitTests.Services
         }
 
         [Fact]
-        public void CheckoutApplicationService_CreateBasket_ReturnsValidBasketId()
+        public async Task CheckoutApplicationService_CreateBasket_ReturnsValidBasketId()
         {
-            var service = new CheckoutApplicationService(new ItemServiceStub());
+            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake());
 
-            var basketId = service.CreateBasket();
+            var basketId = await service.CreateBasket();
 
             Assert.NotNull(basketId);
         }
 
         [Fact]
-        public void CheckoutApplicationService_BaksetAlreadyExists_ThrowsBasketExistsException()
+        public async Task CheckoutApplicationService_AddItem_BasketNotFound_ThrowsBasketNotFoundException()
         {
-            var service = new CheckoutApplicationService(new ItemServiceStub());
+            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake());
 
-            service.CreateBasket();
-
-            Assert.Throws<BasketExistsException>(() =>
+            await Assert.ThrowsAsync<BasketNotFoundException>(async () =>
             {
-                service.CreateBasket();
+                await service.AddItemAsync(new BasketId(Guid.NewGuid()), new("A"), new(1));
             });
         }
     }
