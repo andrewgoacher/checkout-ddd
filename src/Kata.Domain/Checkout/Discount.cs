@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Kata.Domain.Checkout.Events;
 using Kata.Domain.Core;
 using Kata.Domain.Shared;
 
@@ -10,12 +10,36 @@ namespace Kata.Domain.Checkout
         {
         }
 
+        public static Discount NewDiscount(Basket parent, DiscountId id, Description desc, Money amount)
+        {
+            var discount = new Discount();
+            discount.Apply(new DiscountEvents.NewDiscount
+            {
+                Id = id,
+                Description = desc,
+                Amount = amount,
+                ParentId = parent.Id
+            });
+            return discount;
+        }
+
         public BasketId ParentId { get; private set; }
         public Money Amount { get; private set; }
+        public Description Description { get; private set; }
 
         protected override void OnApply(object @event)
         {
-            throw new NotImplementedException();
+            switch (@event)
+            {
+                case DiscountEvents.NewDiscount nd:
+                    {
+                        ParentId = new BasketId(nd.ParentId);
+                        Id = new DiscountId(nd.Id);
+                        Amount = new Money(nd.Amount);
+                        Description = new Description(nd.Description);
+                        break;
+                    }
+            }
         }
     }
 }
