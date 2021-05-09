@@ -64,8 +64,6 @@ namespace Kata.Domain.UnitTests.Checkout
         [Theory]
         [InlineData(1, 50)]
         [InlineData(2, 100)]
-        [InlineData(3, 150)]
-        [InlineData(4, 200)]
         public async Task Basket_AddItemsWithDifferentQuantities_HasCorrectTotal(int quantity, decimal expectedTotal)
         {
             var basket = Basket.Create(new ItemServiceStub());

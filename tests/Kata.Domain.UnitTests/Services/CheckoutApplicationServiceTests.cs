@@ -16,7 +16,7 @@ namespace Kata.Domain.UnitTests.Services
         [Fact]
         public async Task CheckoutApplicationService_CreateBasket_ReturnsValidBasketId()
         {
-            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake());
+            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake(), new DiscountRuleService());
 
             var basketId = await service.CreateBasket();
 
@@ -26,7 +26,7 @@ namespace Kata.Domain.UnitTests.Services
         [Fact]
         public async Task CheckoutApplicationService_AddItem_BasketNotFound_ThrowsBasketNotFoundException()
         {
-            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake());
+            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake(), new DiscountRuleService());
 
             await Assert.ThrowsAsync<BasketNotFoundException>(async () =>
             {
@@ -38,7 +38,7 @@ namespace Kata.Domain.UnitTests.Services
         public async Task CheckoutApplicationService_AddItem_AddsItem()
         {
             var store = new BasketStoreFake();
-            var service = new CheckoutApplicationService(new ItemServiceStub(), store);
+            var service = new CheckoutApplicationService(new ItemServiceStub(), store, new DiscountRuleService());
             var basketId = await service.CreateBasket();
 
             await service.AddItemAsync(basketId, new("A"), new(1));
@@ -51,7 +51,7 @@ namespace Kata.Domain.UnitTests.Services
         [Fact]
         public async Task CheckoutApplicationService_RemoveItem_BasketNotFound_ThrowsBasketNotFoundException()
         {
-            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake());
+            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake(), new DiscountRuleService());
 
             await Assert.ThrowsAsync<BasketNotFoundException>(async () =>
             {
@@ -63,7 +63,7 @@ namespace Kata.Domain.UnitTests.Services
         public async Task CheckoutApplicationService_RemoveItem_RemovesQuantity()
         {
             var store = new BasketStoreFake();
-            var service = new CheckoutApplicationService(new ItemServiceStub(), store);
+            var service = new CheckoutApplicationService(new ItemServiceStub(), store, new DiscountRuleService());
             var basketId = await service.CreateBasket();
 
             await service.AddItemAsync(basketId, new("A"), new(3));
@@ -74,6 +74,23 @@ namespace Kata.Domain.UnitTests.Services
 
             var item = items.Single();
             Assert.Equal(2, item.Quantity);
+        }
+
+        [Theory]
+        [InlineData("A", 3, 130)]
+        [InlineData("A", 6, 260)]
+        [InlineData("B", 2, 45)]
+        [InlineData("B", 4, 90)]
+        public async Task CheckoutApplicationService_AddItems_UpdatesTotalWithAppliedDiscounts(string itemId, int count, decimal expectedOutput)
+        {
+            var store = new BasketStoreFake();
+            var service = new CheckoutApplicationService(new ItemServiceStub(), store, new DiscountRuleService());
+            var basketId = await service.CreateBasket();
+
+            await service.AddItemAsync(basketId, new(itemId), new(count));
+
+            var basket = await store.GetBasketAsync(basketId);
+            Assert.Equal(expectedOutput, basket.GetTotal());
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Kata.Domain.Checkout
     {
         private readonly IItemService _itemService;
         private readonly List<Item> _items;
+        private readonly List<Discount> _discounts;
 
         public event EventHandler<BasketEvents.NewBasket> NewBasketCreated;
         public event EventHandler<BasketEvents.AddItem> ItemAdded;
@@ -24,11 +25,12 @@ namespace Kata.Domain.Checkout
             _itemService = itemService;
 
             _items = new List<Item>();
+            _discounts = new List<Discount>();
         }
 
         public IEnumerable<Item> GetItems() => _items.AsEnumerable();
 
-        public Money GetTotal() => new Money(_items.Sum(x => x.Price * x.Quantity));
+        public Money GetTotal() => new Money(_items.Sum(x => x.Price * x.Quantity) - _discounts.Sum(x => x.Amount));
 
         public async Task AddItemAsync(ItemId itemId, Quantity qty)
         {
@@ -74,6 +76,21 @@ namespace Kata.Domain.Checkout
             return basket;
         }
 
+        public void ClearDiscounts()
+        {
+            Apply(new BasketEvents.RemoveDiscounts());
+        }
+
+        public void AddDiscount(DiscountId id, Description desc, Money amount)
+        {
+            Apply(new BasketEvents.AddDiscount
+            {
+                Amount = amount,
+                Description = desc,
+                DiscountId = id
+            });
+        }
+
         protected override void OnApply(object @event)
         {
             switch (@event)
@@ -110,6 +127,16 @@ namespace Kata.Domain.Checkout
                         {
                             ItemQuantityUpdated?.Invoke(this, (item.Id, item.Quantity));
                         }
+                        break;
+                    }
+                case BasketEvents.RemoveDiscounts:
+                    {
+                        _discounts.Clear();
+                        break;
+                    }
+                case BasketEvents.AddDiscount d:
+                    {
+                        _discounts.Add(Discount.NewDiscount(this, new(d.DiscountId), new(d.Description), new(d.Amount)));
                         break;
                     }
             }
