@@ -19,7 +19,7 @@ namespace Kata.Domain.UnitTests.Checkout
         public async Task Basket_AddItem_ContainsItem()
         {
             var basket = Basket.Create(new ItemServiceStub());
-            await basket.AddItemAsync(new ItemId("A"));
+            await basket.AddItemAsync(new ItemId("A"), new(1));
 
             Assert.NotEmpty(basket.GetItems());
         }
@@ -31,7 +31,7 @@ namespace Kata.Domain.UnitTests.Checkout
 
             var serviceStub = new ItemServiceStub();
             var basket = Basket.Create(new ItemServiceStub());
-            await basket.AddItemAsync(itemId);
+            await basket.AddItemAsync(itemId, new(1));
 
             var expectedItem = await serviceStub.FetchItemAsync(itemId);
             var actualItem = basket.GetItems().Single();
@@ -44,7 +44,7 @@ namespace Kata.Domain.UnitTests.Checkout
         public async Task Basket_AddItem_HasCorretTotal()
         {
             var basket = Basket.Create(new ItemServiceStub());
-            await basket.AddItemAsync(new ItemId("A"));
+            await basket.AddItemAsync(new ItemId("A"), new(1));
 
             Assert.Equal(50m, basket.GetTotal());
         }
@@ -53,10 +53,10 @@ namespace Kata.Domain.UnitTests.Checkout
         public async Task Basket_AddItems_HasCorrectTotal()
         {
             var basket = Basket.Create(new ItemServiceStub());
-            await basket.AddItemAsync(new ItemId("A"));
-            await basket.AddItemAsync(new ItemId("B"));
-            await basket.AddItemAsync(new ItemId("C"));
-            await basket.AddItemAsync(new ItemId("D"));
+            await basket.AddItemAsync(new ItemId("A"), new(1));
+            await basket.AddItemAsync(new ItemId("B"), new(1));
+            await basket.AddItemAsync(new ItemId("C"), new(1));
+            await basket.AddItemAsync(new ItemId("D"), new(1));
 
             Assert.Equal(115m, basket.GetTotal());
         }

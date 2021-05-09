@@ -28,13 +28,14 @@ namespace Kata.Domain.Checkout
 
         public Money GetTotal() => new Money(_items.Sum(x => x.Price));
 
-        public async Task AddItemAsync(ItemId itemId)
+        public async Task AddItemAsync(ItemId itemId, Quantity qty)
         {
             var item = await _itemService.FetchItemAsync(itemId);
             Apply(new BasketEvents.AddItem()
             {
                 ItemId = itemId,
-                Price = item.Price
+                Price = item.Price,
+                Quantity = qty
             });
         }
 
@@ -60,7 +61,7 @@ namespace Kata.Domain.Checkout
                 }
                 case BasketEvents.AddItem ai:
                 {
-                    _items.Add(Item.NewItem(this, new (ai.ItemId), new (ai.Price)));
+                    _items.Add(Item.NewItem(this, new (ai.ItemId), new (ai.Price), new(ai.Quantity)));
                      ItemAdded?.Invoke(this, ai);
                     break;
                 }

@@ -10,33 +10,42 @@ namespace Kata.Domain.Checkout
         {
         }
 
-        public static Item NewItem(Basket basket, ItemId id, Price price)
+        public static Item NewItem(Basket basket, ItemId id, Price price, Quantity qty)
         {
             var item = new Item();
             item.Apply(new ItemEvents.NewItem()
             {
                 ParentId = basket.Id,
                 Price = price,
-                ItemId = id
+                ItemId = id,
+                Quantity = qty
             });
             return item;
         }
-        
+
         public BasketId ParentId { get; private set; }
-        
+
         public Price Price { get; private set; }
+
+        public Quantity Quantity { get; private set; }
 
         protected override void OnApply(object @event)
         {
             switch (@event)
             {
                 case ItemEvents.NewItem ni:
-                {
-                    ParentId = new BasketId(ni.ParentId);
-                    Id = new ItemId(ni.ItemId);
-                    Price = new Price(ni.Price);
-                    break;
-                }
+                    {
+                        if (ni.Quantity == 0)
+                        {
+                            throw new InvalidItemQuantityException();
+                        }
+
+                        ParentId = new BasketId(ni.ParentId);
+                        Id = new ItemId(ni.ItemId);
+                        Price = new Price(ni.Price);
+                        Quantity = new Quantity(ni.Quantity);
+                        break;
+                    }
             }
         }
     }
