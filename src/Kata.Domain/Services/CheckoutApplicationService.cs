@@ -32,5 +32,16 @@ namespace Kata.Domain.Services
             var basket = await _basketStore.GetBasketAsync(basketId);
             await basket.AddItemAsync(itemId, qty);
         }
+
+        public async Task RemoveItemAsync(BasketId basketId, ItemId itemId, Quantity qty)
+        {
+            if (!await _basketStore.ExistsAsync(basketId))
+            {
+                throw new BasketNotFoundException();
+            }
+
+            var basket = await _basketStore.GetBasketAsync(basketId);
+            basket.RemoveItem(itemId, qty);
+        }
     }
 }

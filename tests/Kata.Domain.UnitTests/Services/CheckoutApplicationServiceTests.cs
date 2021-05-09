@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Kata.Domain.Checkout;
 using Kata.Domain.Services;
@@ -45,6 +46,34 @@ namespace Kata.Domain.UnitTests.Services
             var basket = await store.GetBasketAsync(basketId);
             var items = basket.GetItems();
             Assert.NotNull(items);
+        }
+
+        [Fact]
+        public async Task CheckoutApplicationService_RemoveItem_BasketNotFound_ThrowsBasketNotFoundException()
+        {
+            var service = new CheckoutApplicationService(new ItemServiceStub(), new BasketStoreFake());
+
+            await Assert.ThrowsAsync<BasketNotFoundException>(async () =>
+            {
+                await service.RemoveItemAsync(new BasketId(Guid.NewGuid()), new("A"), new(1));
+            });
+        }
+
+        [Fact]
+        public async Task CheckoutApplicationService_RemoveItem_RemovesQuantity()
+        {
+            var store = new BasketStoreFake();
+            var service = new CheckoutApplicationService(new ItemServiceStub(), store);
+            var basketId = await service.CreateBasket();
+
+            await service.AddItemAsync(basketId, new("A"), new(3));
+            await service.RemoveItemAsync(basketId, new("A"), new(1));
+
+            var basket = await store.GetBasketAsync(basketId);
+            var items = basket.GetItems();
+
+            var item = items.Single();
+            Assert.Equal(2, item.Quantity);
         }
     }
 }
