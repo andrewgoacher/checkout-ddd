@@ -1,4 +1,3 @@
-using System;
 using Kata.Domain.Checkout.Events;
 using Kata.Domain.Core;
 using Kata.Domain.Shared;
