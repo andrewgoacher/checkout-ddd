@@ -9,11 +9,11 @@ namespace Kata.Domain.Checkout
                 throw new InvalidItemIdException();
             }
 
-            Id = id;
+            _id = id;
         }
-        
-        public string Id { get; }
 
-        public static implicit operator string(ItemId id) => id.Id;
+        private string _id;
+
+        public static implicit operator string(ItemId id) => id._id;
     }
 }

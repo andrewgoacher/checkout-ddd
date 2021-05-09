@@ -10,11 +10,11 @@ namespace Kata.Domain.Checkout
             {
                 throw new InvalidBasketIdException();
             }
-            Id = id;
+            _id = id;
         }
-        
-        public Guid Id { get; }
 
-        public static implicit operator Guid(BasketId basketId) => basketId.Id;
+        private Guid _id;
+
+        public static implicit operator Guid(BasketId basketId) => basketId._id;
     }
 }

@@ -9,13 +9,13 @@ namespace Kata.Domain.Shared
                 throw new TooManyDecimalPlacesException();
             }
 
-            Value = value;
+            _value = value;
         }
-        
-        public decimal Value { get; }
 
-        public static implicit operator decimal(Money money) => money.Value;
-        public static Money operator +(Money lhs, Money rhs) => new(lhs.Value + rhs.Value);
-        public static Money operator -(Money lhs, Money rhs) => new(lhs.Value - rhs.Value);
+        private decimal _value;
+
+        public static implicit operator decimal(Money money) => money._value;
+        public static Money operator +(Money lhs, Money rhs) => new(lhs._value + rhs._value);
+        public static Money operator -(Money lhs, Money rhs) => new(lhs._value - rhs._value);
     }
 }
