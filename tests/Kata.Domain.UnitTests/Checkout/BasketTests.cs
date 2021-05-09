@@ -60,5 +60,18 @@ namespace Kata.Domain.UnitTests.Checkout
 
             Assert.Equal(115m, basket.GetTotal());
         }
+
+        [Theory]
+        [InlineData(1, 50)]
+        [InlineData(2, 100)]
+        [InlineData(3, 150)]
+        [InlineData(4, 200)]
+        public async Task Basket_AddItemsWithDifferentQuantities_HasCorrectTotal(int quantity, decimal expectedTotal)
+        {
+            var basket = Basket.Create(new ItemServiceStub());
+            await basket.AddItemAsync(new ItemId("A"), new(quantity));
+
+            Assert.Equal(expectedTotal, basket.GetTotal());
+        }
     }
 }

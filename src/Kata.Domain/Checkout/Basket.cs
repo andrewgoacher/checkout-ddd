@@ -26,7 +26,7 @@ namespace Kata.Domain.Checkout
 
         public IEnumerable<Item> GetItems() => _items.AsEnumerable();
 
-        public Money GetTotal() => new Money(_items.Sum(x => x.Price));
+        public Money GetTotal() => new Money(_items.Sum(x => x.Price * x.Quantity));
 
         public async Task AddItemAsync(ItemId itemId, Quantity qty)
         {
