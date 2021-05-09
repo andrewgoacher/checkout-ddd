@@ -92,5 +92,36 @@ namespace Kata.Domain.UnitTests.Services
             var basket = await store.GetBasketAsync(basketId);
             Assert.Equal(expectedOutput, basket.GetTotal());
         }
+
+        [Theory]
+        [InlineData("A", 5, 230)]
+        [InlineData("B", 3, 75)]
+        public async Task CheckoutApplicationService_AddItemsWithOverflow_UpdatesTotalWithAppliedDiscounts(string itemId, int count, decimal expectedOutput)
+        {
+            var store = new BasketStoreFake();
+            var service = new CheckoutApplicationService(new ItemServiceStub(), store, new DiscountRuleService());
+            var basketId = await service.CreateBasket();
+
+            await service.AddItemAsync(basketId, new(itemId), new(count));
+
+            var basket = await store.GetBasketAsync(basketId);
+            Assert.Equal(expectedOutput, basket.GetTotal());
+        }
+
+        [Fact]
+        public async Task CheckoutApplicationservice_AddMultipleItems_CorrectlyAppliesDiscount()
+        {
+            var store = new BasketStoreFake();
+            var service = new CheckoutApplicationService(new ItemServiceStub(), store, new DiscountRuleService());
+            var basketId = await service.CreateBasket();
+
+            await service.AddItemAsync(basketId, new("A"), new(4));
+            await service.AddItemAsync(basketId, new("B"), new(2));
+            await service.AddItemAsync(basketId, new("C"), new(2));
+            await service.AddItemAsync(basketId, new("D"), new(1));
+
+            var basket = await store.GetBasketAsync(basketId);
+            Assert.Equal(280m, basket.GetTotal());
+        }
     }
 }
