@@ -31,6 +31,7 @@ namespace Kata.Domain.Services
 
             var basket = await _basketStore.GetBasketAsync(basketId);
             await basket.AddItemAsync(itemId, qty);
+            await _basketStore.StoreBasketAsync(basket);
         }
 
         public async Task RemoveItemAsync(BasketId basketId, ItemId itemId, Quantity qty)
@@ -42,6 +43,7 @@ namespace Kata.Domain.Services
 
             var basket = await _basketStore.GetBasketAsync(basketId);
             basket.RemoveItem(itemId, qty);
+            await _basketStore.StoreBasketAsync(basket);
         }
     }
 }
