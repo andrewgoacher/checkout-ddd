@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Kata.Domain.Checkout;
@@ -102,6 +103,19 @@ namespace Kata.Domain.UnitTests.Checkout
             basket.RemoveItem(new("A"), new(2));
 
             Assert.Empty(basket.GetItems());
+        }
+
+        [Fact]
+        public void Basket_WithDiscount_NoItems_ThrowsInvalidBasketException()
+        {
+            var basket = Basket.Create(new ItemServiceStub());
+
+            var ex = Assert.Throws<InvalidBasketException>(() =>
+            {
+                basket.AddDiscount(new(Guid.NewGuid()), new("Test description"), new(100));
+            });
+
+            Assert.Equal("No items to apply discount", ex.Error);
         }
     }
 }

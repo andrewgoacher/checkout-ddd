@@ -16,8 +16,11 @@ namespace Kata.Domain.Checkout
         private readonly List<Discount> _discounts;
 
         public event EventHandler<BasketEvents.NewBasket> NewBasketCreated;
+
         public event EventHandler<BasketEvents.AddItem> ItemAdded;
+
         public event EventHandler<(ItemId, Quantity)> ItemQuantityUpdated;
+
         public event EventHandler<ItemId> ItemRemoved;
 
         private Basket(IItemService itemService) : base()
@@ -46,7 +49,6 @@ namespace Kata.Domain.Checkout
             }
             else
             {
-
                 var item = await _itemService.FetchItemAsync(itemId);
                 Apply(new BasketEvents.AddItem()
                 {
@@ -152,6 +154,11 @@ namespace Kata.Domain.Checkout
             if (_items.Any(x => x.Quantity == 0))
             {
                 throw new InvalidBasketException("Empty Item");
+            }
+
+            if (!_items.Any() && _discounts.Any())
+            {
+                throw new InvalidBasketException("No items to apply discount");
             }
         }
     }
