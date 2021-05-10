@@ -1,4 +1,5 @@
 using Kata.Domain.Services;
+using KataApi.Config;
 using KataApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,10 @@ namespace KataApi
         {
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "KataApi", Version = "v1"}); });
+
+            // Database stuff
+            services.Configure<BasketStoreSettings>(
+                Configuration.GetSection(nameof(BasketStoreSettings)));
 
             // Domain service registration
             services.AddScoped<IBasketStore, BasketStore>();
