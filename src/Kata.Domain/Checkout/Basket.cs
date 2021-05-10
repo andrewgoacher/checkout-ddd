@@ -23,7 +23,7 @@ namespace Kata.Domain.Checkout
 
         public event EventHandler<ItemId> ItemRemoved;
 
-        private Basket(IItemService itemService) : base()
+        public Basket(IItemService itemService) : base()
         {
             _itemService = itemService;
 

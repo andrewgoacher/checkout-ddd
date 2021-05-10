@@ -48,10 +48,12 @@ I'm going to stick to a relatively basic pattern because I haven't finished the 
   Will see how it goes.  
 
 
-Using Mongo DB (Docker)
-`docker pull mongo`
+Using Mongo DB 
 
-using:
+Open CLI and run
+
 ```
-docker run --name mongo-checkout-db -v ~/dev/data/checkoutdb:/data/db -d mongo
+mongo
+use BasketDb
+db.createCollection('Basket')
 ```
