@@ -47,3 +47,11 @@ I'm going to stick to a relatively basic pattern because I haven't finished the 
   So for now I'm going to take the Event/Handling style code from the book but not necessarily have commands.    
   Will see how it goes.  
 
+
+Using Mongo DB (Docker)
+`docker pull mongo`
+
+using:
+```
+docker run --name mongo-checkout-db -v ~/dev/data/checkoutdb:/data/db -d mongo
+```
