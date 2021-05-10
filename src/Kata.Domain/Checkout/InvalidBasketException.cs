@@ -1,14 +1,14 @@
-using System;
+using Kata.Domain.Core;
 
 namespace Kata.Domain.Checkout
 {
-    public class InvalidBasketException : Exception
+    public class InvalidBasketException : ValidationException
     {
-        public string Error { get; }
 
-        public InvalidBasketException(string error)
+        public InvalidBasketException(string description) : base(description)
         {
-            Error = error;
         }
+
+        public InvalidBasketException(string field, string value) : base(field, value) { }
     }
 }

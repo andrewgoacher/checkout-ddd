@@ -115,7 +115,7 @@ namespace Kata.Domain.UnitTests.Checkout
                 basket.AddDiscount(new(Guid.NewGuid()), new("Test description"), new(100));
             });
 
-            Assert.Equal("No items to apply discount", ex.Error);
+            Assert.Equal("No items to apply discount", ex.Description);
         }
     }
 }

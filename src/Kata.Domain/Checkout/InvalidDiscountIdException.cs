@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Kata.Domain.Core;
+
 namespace Kata.Domain.Checkout
 {
-    public class InvalidDiscountIdException : Exception
+    public class InvalidDiscountIdException : ValidationException
     {
-        public InvalidDiscountIdException()
+        public InvalidDiscountIdException() : base ("The id is invalid")
         {
         }
     }

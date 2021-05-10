@@ -148,7 +148,7 @@ namespace Kata.Domain.Checkout
         {
             if (Id == null)
             {
-                throw new InvalidBasketException("Id");
+                throw new InvalidBasketException("Id", "null");
             }
 
             if (_items.Any(x => x.Quantity == 0))

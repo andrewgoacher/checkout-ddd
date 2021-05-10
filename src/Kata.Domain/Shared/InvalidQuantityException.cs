@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Kata.Domain.Core;
+
 namespace Kata.Domain.Shared
 {
-    public class InvalidQuantityException :  Exception
+    public class InvalidQuantityException :  ValidationException
     {
-        public InvalidQuantityException()
+        public InvalidQuantityException() : base("Quantity cannot be less than zero")
         {
         }
     }

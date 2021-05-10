@@ -53,7 +53,7 @@ namespace Kata.Domain.Checkout
                     {
                         if (ni.Quantity == 0)
                         {
-                            throw new InvalidItemQuantityException();
+                            throw new InvalidItemQuantityException(new(0));
                         }
 
                         ParentId = new BasketId(ni.ParentId);

@@ -29,7 +29,7 @@ namespace Kata.Domain.Services
         {
             if (!await _basketStore.ExistsAsync(basketId))
             {
-                throw new BasketNotFoundException();
+                throw new BasketNotFoundException(basketId);
             }
 
             var basket = await _basketStore.GetBasketAsync(basketId);
@@ -43,7 +43,7 @@ namespace Kata.Domain.Services
         {
             if (!await _basketStore.ExistsAsync(basketId))
             {
-                throw new BasketNotFoundException();
+                throw new BasketNotFoundException(basketId);
             }
 
             var basket = await _basketStore.GetBasketAsync(basketId);
