@@ -8,11 +8,11 @@ namespace Kata.Domain.Checkout.Events
         {
             public Guid Id { get; set; }
         }
-        
+
         public sealed class AddItem
         {
-            public string ItemId {get;set; }
-            public decimal Price {get; set;}
+            public string ItemId { get; set; }
+            public decimal Price { get; set; }
             public int Quantity { get; set; }
         }
 
@@ -30,7 +30,6 @@ namespace Kata.Domain.Checkout.Events
 
         public sealed class RemoveDiscounts
         {
-
         }
 
         public sealed class AddDiscount
