@@ -1,5 +1,7 @@
 namespace Kata.Domain.Checkout
 {
+
+    [System.Diagnostics.DebuggerDisplay("{id}")]
     public record ItemId
     {
         public ItemId(string id)

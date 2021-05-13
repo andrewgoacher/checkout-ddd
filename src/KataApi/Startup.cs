@@ -1,7 +1,7 @@
-using System.Reflection;
-using Kata.Domain.Checkout;
+using System;
 using Kata.Domain.Services;
-using KataApi.Config;
+using KataApi.Domain.Infrastructure.Config;
+using KataApi.Domain.Infrastructure.DB;
 using KataApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using MongoDB.Bson.Serialization;
 
 namespace KataApi
 {
@@ -51,26 +50,7 @@ namespace KataApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KataApi v1"));
             }
 
-            BsonClassMap.RegisterClassMap<Basket>(c =>
-            {
-                //c.MapIdProperty(x => x.Id);
-                c.AutoMap();
-
-                c.MapCreator(x => new Basket(app.ApplicationServices.GetRequiredService<IItemService>()));
-
-            });
-
-            BsonClassMap.RegisterClassMap<Item>(x =>
-            {
-                x.AutoMap();
-                //x.MapIdProperty(x => x.Id);
-            });
-
-            BsonClassMap.RegisterClassMap<Discount>(x =>
-            {
-                x.AutoMap();
-                //x.MapIdProperty(x => x.Id);
-            });
+            MapDomainModels(app.ApplicationServices);
 
             app.UseHttpsRedirection();
 
@@ -79,6 +59,11 @@ namespace KataApi
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        private void MapDomainModels(IServiceProvider provider)
+        {
+            BasketStore.RegisterClasses();
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace Kata.Domain.Shared
 {
+
+    [System.Diagnostics.DebuggerDisplay("{_value}")]
     public record Description
     {
         private string _value;

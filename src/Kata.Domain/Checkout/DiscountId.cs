@@ -1,6 +1,8 @@
 ﻿using System;
 namespace Kata.Domain.Checkout
 {
+
+    [System.Diagnostics.DebuggerDisplay("{_id}")]
     public record DiscountId
     {
         private Guid _id;

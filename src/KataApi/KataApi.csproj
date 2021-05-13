@@ -21,9 +21,11 @@
       <ProjectReference Include="..\Kata.Domain\Kata.Domain.csproj">
         <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
       </ProjectReference>
+      <ProjectReference Include="..\Kata.Domain.Infrastructure\Kata.Domain.Infrastructure.csproj">
+        <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+      </ProjectReference>
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Services\" />
-      <Folder Include="Config\" />
     </ItemGroup>
 </Project>

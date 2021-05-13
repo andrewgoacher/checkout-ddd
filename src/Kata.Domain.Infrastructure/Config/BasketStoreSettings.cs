@@ -1,4 +1,4 @@
-﻿namespace KataApi.Config
+﻿namespace KataApi.Domain.Infrastructure.Config
 {
     public class BasketStoreSettings
     {

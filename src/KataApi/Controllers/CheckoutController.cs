@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Kata.Domain.Checkout;
 using Kata.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,12 @@ namespace KataApi.Controllers
         {
             var id = await _appService.CreateBasket();
             return id;
+        }
+
+        [HttpGet]
+        public async Task<Basket> GetBasket(Guid basketId)
+        {
+            return await _appService.GetBasket(new BasketId(basketId));
         }
     }
 }
