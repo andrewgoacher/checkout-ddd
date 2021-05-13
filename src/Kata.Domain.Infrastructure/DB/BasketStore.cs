@@ -153,7 +153,7 @@ namespace KataApi.Domain.Infrastructure.DB
         public async Task<Basket> GetBasketAsync(BasketId id)
         {
             var baskets = await _basketCollection.FindAsync(x => x.Id == id);
-            var basket = await baskets.SingleAsync();
+            var basket = await baskets.SingleOrDefaultAsync();
             return basket;
         }
 
