@@ -27,7 +27,13 @@ namespace Kata.Domain.Services
 
         public async Task<Basket> GetBasket(BasketId basketId)
         {
-            return await _basketStore.GetBasketAsync(basketId);
+            var basket = await _basketStore.GetBasketAsync(basketId);
+            if (basket == null)
+            {
+                throw new BasketNotFoundException(basketId);
+            }
+
+            return basket;
         }
 
         public async Task AddItemAsync(BasketId basketId, ItemId itemId, Quantity qty)

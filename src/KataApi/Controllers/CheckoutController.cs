@@ -55,19 +55,13 @@ namespace KataApi.Controllers
         /// <response code="200">The basket</response>
         /// <response code="400">There was a validation error</response>
         /// <response code="404">The basket could not be found</response>
-        [HttpGet]
+        [HttpGet("{basketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<Basket>> GetBasket([FromRoute] Guid basketId)
         {
-            var basket = await _appService.GetBasket(new BasketId(basketId));
-            if (basket == null)
-            {
-                return new NotFoundResult();
-            }
-
-            return new OkObjectResult(basket);
+            return await _appService.GetBasket(new BasketId(basketId));
         }
 
         /// <summary>
@@ -95,7 +89,7 @@ namespace KataApi.Controllers
         /// <response code="404">Returns not found if the basket could not be found</response>
         /// 
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("{basketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> AddItem([FromRoute] Guid basketId, [FromBody] AddItemCmd addItem)
