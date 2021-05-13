@@ -50,6 +50,11 @@ namespace Kata.Domain.Checkout
             else
             {
                 var item = await _itemService.FetchItemAsync(itemId);
+                if (item == null)
+                {
+                    throw new ItemNotFoundException($"The itemwith id ({itemId}) could not be found");
+                }
+
                 Apply(new BasketEvents.AddItem()
                 {
                     ItemId = itemId,

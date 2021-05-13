@@ -27,5 +27,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Services\" />
+      <Folder Include="Filters\" />
     </ItemGroup>
 </Project>

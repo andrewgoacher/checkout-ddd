@@ -2,6 +2,7 @@ using System;
 using Kata.Domain.Services;
 using KataApi.Domain.Infrastructure.Config;
 using KataApi.Domain.Infrastructure.DB;
+using KataApi.Filters;
 using KataApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +25,11 @@ namespace KataApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(c =>
+            {
+                c.Filters.Add(new GlobalExceptionFilter());
+            });
+
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "KataApi", Version = "v1"}); });
 
             // Database stuff
