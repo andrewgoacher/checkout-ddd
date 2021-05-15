@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KataApi.Controllers
 {
+    /// <summary>
+    /// Controller responsible for the Checkout aggregate route
+    /// </summary>
     [ApiController]
     [Produces("application/json")]
     [Route("api/[controller]")]
@@ -13,6 +16,10 @@ namespace KataApi.Controllers
     {
         private CheckoutApplicationService _appService;
 
+        /// <summary>
+        /// Creates an instance of a checkout controller
+        /// </summary>
+        /// <param name="appService">The app service represents all the operations we can perform on a valid basket instance</param>
         public CheckoutController(CheckoutApplicationService appService)
         {
             _appService = appService;
@@ -53,8 +60,6 @@ namespace KataApi.Controllers
         /// <summary>
         /// Adds an item with a specified quantity to the specified basket
         /// </summary>
-        ///
-        /// <remarks>
         /// 
         /// <param name="basketId">The basket to add the item to</param>
         /// <param name="addItem">
@@ -76,9 +81,18 @@ namespace KataApi.Controllers
         }
     }
 
+    /// <summary>
+    /// Represents the intent to add an item to a basket
+    /// </summary>
     public class AddItemCmd
     {
+        /// <summary>
+        /// The id of the item to add to the basket
+        /// </summary>
         public string ItemId { get; set; }
+        /// <summary>
+        /// The number of items we'll be adding
+        /// </summary>
         public int Quantity { get; set; }
     }
 }

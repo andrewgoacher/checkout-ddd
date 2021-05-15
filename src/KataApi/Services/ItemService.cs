@@ -7,10 +7,17 @@ namespace KataApi.Services
 {
     using Item = Kata.Domain.Services.Models.Item;
 
+    /// <summary>
+    /// The checkout kata implementation of the item service.
+    /// </summary>
     public class ItemService : IItemService
     {
         private readonly Dictionary<ItemId, Item> _items;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ItemService()
         {
             _items = new()
@@ -22,6 +29,12 @@ namespace KataApi.Services
             };
         }
 
+        /// <summary>
+        /// Gets an item from the dictionary collection
+        /// </summary>
+        /// <exception cref="ItemNotFoundException">When the item is not found</exception>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
         public Task<Item> FetchItemAsync(ItemId itemId)
         {
             if (_items.TryGetValue(itemId, out var item))

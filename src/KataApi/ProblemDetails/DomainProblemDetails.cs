@@ -2,8 +2,16 @@
 
 namespace KataApi.ProblemDetails
 {
+    /// <summary>
+    /// Standardised error message for a <see cref="Kata.Domain.Core.DomainException"/> that is not otherwise handled
+    /// </summary>
     public class DomainProblemDetails : Microsoft.AspNetCore.Mvc.ProblemDetails
     {
+        /// <summary>
+        /// Creates an instance of a DomainProblemDetails
+        /// </summary>
+        /// <param name="uri">The path to the resource that threw the error</param>
+        /// <param name="ex">The <see cref="DomainException"/> </param>
         public DomainProblemDetails(string uri, DomainException ex)
         {
             Status = 400;
