@@ -76,7 +76,7 @@ namespace KataApi.Controllers
         /// <response code="404">Returns not found if the basket could not be found</response>
         /// 
         /// <returns></returns>
-        [HttpPost("{basketId}")]
+        [HttpPost("{basketId}/addItem")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(DomainValidationProblemDetails), 400)]
         [ProducesResponseType(typeof(DomainProblemDetails), 400)]
