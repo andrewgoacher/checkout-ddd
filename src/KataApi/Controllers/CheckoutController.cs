@@ -32,6 +32,8 @@ namespace KataApi.Controllers
         ///
         /// <returns>A basket id</returns>
         /// <response code="200">The id of the newly created basket</response>
+        /// <response code="400">The basket failed to create</response>
+        /// <responde code="500">Something went wrong</responde>
         [HttpPost]
         [ProducesResponseType(typeof(Guid), 200)]
         [ProducesResponseType(typeof(DomainProblemDetails), 400)]
