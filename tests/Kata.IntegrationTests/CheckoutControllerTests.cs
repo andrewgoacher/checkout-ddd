@@ -20,9 +20,7 @@ namespace Kata.IntegrationTests
         public CheckoutControllerTests()
         {
             string codeBase = Assembly.GetExecutingAssembly().Location;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            var dir =  Path.GetDirectoryName(path);
+            var dir =  Path.GetDirectoryName(codeBase);
 
             _server = new TestServer(new WebHostBuilder()
                 .UseEnvironment("Development")
@@ -44,8 +42,8 @@ namespace Kata.IntegrationTests
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
+            var id = System.Text.Json.JsonSerializer.Deserialize<Guid>(responseString);
 
-            Assert.True(Guid.TryParse(responseString, out var id));
             Assert.NotEqual(Guid.Empty, id);
 
 

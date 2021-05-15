@@ -41,7 +41,7 @@ namespace KataApi.Controllers
         public async Task<ActionResult<Guid>> CreateBasket()
         {
             var id = await _appService.CreateBasket();
-            return new OkObjectResult(id);
+            return (Guid)id;
         }
 
         /// <summary>
