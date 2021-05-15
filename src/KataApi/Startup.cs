@@ -30,7 +30,7 @@ namespace KataApi
                 c.Filters.Add(new GlobalExceptionFilter());
             });
 
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "KataApi", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "KataApi", Version = "v1", Description = "A web api implementing the checkout kata" }); });
 
             // Database stuff
             services.Configure<BasketStoreSettings>(
@@ -42,7 +42,7 @@ namespace KataApi
             services.AddSingleton<DiscountRuleService>();
             services.AddScoped<CheckoutApplicationService>();
 
-         
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
