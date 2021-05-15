@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Reflection;
 using Kata.Domain.Services;
 using KataApi.Domain.Infrastructure.Config;
 using KataApi.Domain.Infrastructure.DB;
@@ -30,7 +32,13 @@ namespace KataApi
                 c.Filters.Add(new GlobalExceptionFilter());
             });
 
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "KataApi", Version = "v1", Description = "A web api implementing the checkout kata" }); });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "KataApi", Version = "v1", Description = "A web api implementing the checkout kata" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
 
             // Database stuff
             services.Configure<BasketStoreSettings>(

@@ -22,13 +22,6 @@ namespace KataApi.Controllers
         /// Creates a new basket
         /// </summary>
         ///
-        /// <remarks>
-        /// 
-        /// Sample request:
-        /// POST /api/checkout
-        /// 
-        /// </remarks>
-        ///
         /// <returns>A basket id</returns>
         /// <response code="200">The id of the newly created basket</response>
         [HttpPost]
@@ -42,13 +35,6 @@ namespace KataApi.Controllers
         /// <summary>
         /// Gets a basket from the specified basket id
         /// </summary>
-        ///
-        /// <remarks>
-        /// 
-        /// Sample request:
-        /// POST /api/checkout/{basketId}
-        /// 
-        /// </remarks>
         /// 
         /// <param name="basketId">The id of the basket</param>
         /// <returns>The complete basket</returns>
@@ -69,15 +55,6 @@ namespace KataApi.Controllers
         /// </summary>
         ///
         /// <remarks>
-        ///
-        /// Sample request:
-        /// /api/checkout/{basketId}
-        /// {
-        ///     "ItemId": "A",
-        ///     "Quantity": 5
-        /// }
-        /// 
-        /// </remarks>
         /// 
         /// <param name="basketId">The basket to add the item to</param>
         /// <param name="addItem">
