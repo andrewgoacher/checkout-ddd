@@ -7,7 +7,7 @@
 
         public Quantity(int value)
         {
-            if (value < 0 )
+            if (value < 0)
             {
                 throw new InvalidQuantityException();
             }
@@ -31,5 +31,10 @@
         }
 
         public static implicit operator int(Quantity qty) => qty._value;
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 }

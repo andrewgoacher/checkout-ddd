@@ -16,5 +16,10 @@
         }
 
         public static implicit operator string(Description desc) => desc._value;
+
+        public override string ToString()
+        {
+            return _value;
+        }
     }
 }

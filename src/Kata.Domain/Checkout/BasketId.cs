@@ -18,5 +18,10 @@ namespace Kata.Domain.Checkout
         private Guid _id;
 
         public static implicit operator Guid(BasketId basketId) => basketId._id;
+
+        public override string ToString()
+        {
+            return _id.ToString();
+        }
     }
 }

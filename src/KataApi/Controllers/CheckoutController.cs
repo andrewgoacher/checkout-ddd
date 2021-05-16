@@ -61,7 +61,8 @@ namespace KataApi.Controllers
         [ProducesResponseType(typeof(InternalServerErrorProblemDetails), 500)]
         public async Task<ActionResult<Basket>> GetBasket([FromRoute] Guid basketId)
         {
-            return await _appService.GetBasket(new BasketId(basketId));
+            var basket = await _appService.GetBasket(new BasketId(basketId));
+            return basket;
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace KataApi.Controllers
         [ProducesResponseType(typeof(InternalServerErrorProblemDetails), 500)]
         public async Task<IActionResult> AddItem([FromRoute] Guid basketId, [FromBody] AddItemCmd addItem)
         {
-            await _appService.AddItemAsync(new (basketId), new (addItem.ItemId), new (addItem.Quantity));
+            await _appService.AddItemAsync(new(basketId), new(addItem.ItemId), new(addItem.Quantity));
             return new OkResult();
         }
     }

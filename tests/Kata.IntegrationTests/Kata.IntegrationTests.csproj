@@ -30,5 +30,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Fixtures\" />
+      <Folder Include="CheckoutController\" />
     </ItemGroup>
 </Project>

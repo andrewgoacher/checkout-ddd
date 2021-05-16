@@ -21,5 +21,10 @@ namespace KataApi.ProblemDetails
             this.Instance = uri;
             this.Detail = ex.Description;
         }
+
+        private DomainValidationProblemDetails()
+        {
+            // For serialization
+        }
     }
 }

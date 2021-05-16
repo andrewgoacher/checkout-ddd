@@ -102,7 +102,7 @@ namespace KataApi.Domain.Infrastructure.DB
             if (!BsonClassMap.IsClassMapRegistered(typeof(Discount)))
             {
                 BsonClassMap.RegisterClassMap<Discount>(d =>
-                { 
+                {
                     d.AutoMap();
                 });
             }

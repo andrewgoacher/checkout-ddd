@@ -19,5 +19,10 @@ namespace Kata.Domain.Shared
         public static implicit operator decimal(Money money) => money._value;
         public static Money operator +(Money lhs, Money rhs) => new(lhs._value + rhs._value);
         public static Money operator -(Money lhs, Money rhs) => new(lhs._value - rhs._value);
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 }

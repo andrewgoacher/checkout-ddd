@@ -1,10 +1,11 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Kata.Domain.Services;
 using KataApi.Domain.Infrastructure.Config;
 using KataApi.Domain.Infrastructure.DB;
-using KataApi.Filters;
+using KataApi.Middleware;
 using KataApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,10 +42,7 @@ namespace KataApi
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(c =>
-            {
-                c.Filters.Add(new GlobalExceptionFilter());
-            });
+            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
@@ -77,10 +75,14 @@ namespace KataApi
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KataApi v1"));
             }
+
+            app.UseExceptionHandler(err =>
+            {
+                err.Run(async ctx => await ExceptionMiddleware.Run(ctx));
+            });
 
             MapDomainModels(app.ApplicationServices);
 

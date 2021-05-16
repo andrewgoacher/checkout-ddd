@@ -17,5 +17,10 @@ namespace Kata.Domain.Checkout
         private string _id;
 
         public static implicit operator string(ItemId id) => id._id;
+
+        public override string ToString()
+        {
+            return _id;
+        }
     }
 }

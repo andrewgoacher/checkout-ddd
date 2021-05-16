@@ -1,18 +1,23 @@
 ﻿using System;
 using System.IO;
-using System.Net.Http;
 using System.Reflection;
 using KataApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Xunit;
 
 namespace Kata.IntegrationTests.Fixtures
 {
+    [CollectionDefinition("Integration Tests")]
+    public class TestServerFixtureCollection : ICollectionFixture<TestServerFixture>
+    {
+
+    }
+
     public class TestServerFixture : IDisposable
     {
         private readonly TestServer _server;
-        private readonly HttpClient _client;
 
         private bool disposedValue;
 
@@ -26,12 +31,9 @@ namespace Kata.IntegrationTests.Fixtures
                  .Build()
              )
              .UseStartup<Startup>());
-
-            _client = _server.CreateClient();
         }
 
         public TestServer TestServer => _server;
-        public HttpClient Client => _client;
 
         private static string GetTestBaseDir() =>
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -42,7 +44,6 @@ namespace Kata.IntegrationTests.Fixtures
             {
                 if (disposing)
                 {
-                    _client?.Dispose();
                     _server?.Dispose();
                 }
                 disposedValue = true;
