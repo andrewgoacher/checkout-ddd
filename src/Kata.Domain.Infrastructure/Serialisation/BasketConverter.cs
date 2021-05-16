@@ -36,32 +36,6 @@ namespace Kata.Domain.Infrastructure.Serialisation
                     return basket;
                 }
 
-                if (reader.TokenType == JsonTokenType.StartArray)
-                {
-
-                    propertyName = reader.GetString();
-
-                    while (reader.Read())
-                    {
-                        if (reader.TokenType == JsonTokenType.EndArray)
-                            break;
-
-                        switch (propertyName)
-                        {
-                            case "Discounts":
-                                {
-                                    discounts.Add(JsonSerializer.Deserialize<Discount>(ref reader, options));
-                                    break;
-                                }
-                            case "Items":
-                                {
-                                    items.Add(JsonSerializer.Deserialize<Item>(ref reader, options));
-                                    break;
-                                }
-                        }
-                    }
-                }
-
                 if (reader.TokenType == JsonTokenType.PropertyName)
                 {
                     propertyName = reader.GetString();
@@ -71,6 +45,34 @@ namespace Kata.Domain.Infrastructure.Serialisation
                         case "Id":
                             id = reader.GetString();
                             break;
+                        case "Items":
+                        case "Discounts":
+                            {
+                                if (reader.TokenType == JsonTokenType.StartArray)
+                                {
+
+                                    while (reader.Read())
+                                    {
+                                        if (reader.TokenType == JsonTokenType.EndArray)
+                                            break;
+
+                                        switch (propertyName)
+                                        {
+                                            case "Discounts":
+                                                {
+                                                    discounts.Add(JsonSerializer.Deserialize<Discount>(ref reader, options));
+                                                    break;
+                                                }
+                                            case "Items":
+                                                {
+                                                    items.Add(JsonSerializer.Deserialize<Item>(ref reader, options));
+                                                    break;
+                                                }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
                     }
                 }
             }
