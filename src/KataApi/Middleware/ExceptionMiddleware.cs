@@ -8,12 +8,23 @@ using Microsoft.Extensions.Logging;
 
 namespace KataApi.Middleware
 {
+    /// <summary>
+    /// Handles any errors through the request pipeline
+    /// </summary>
     public class ExceptionMiddleware
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ExceptionMiddleware()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
         public static async Task Run(HttpContext ctx)
         {
             var exceptionHandlerPathFeature =
