@@ -80,6 +80,8 @@ namespace Kata.Domain.Infrastructure.Serialisation
 
         public override void Write(Utf8JsonWriter writer, Basket value, JsonSerializerOptions options)
         {
+            writer.WriteStartObject();
+
             writer.WriteString("Id", value.Id);
             writer.WriteStartArray("Items");
             foreach (var item in value.GetItems())
@@ -94,6 +96,7 @@ namespace Kata.Domain.Infrastructure.Serialisation
             }
             writer.WriteEndArray();
 
+            writer.WriteEndObject();
         }
     }
 }

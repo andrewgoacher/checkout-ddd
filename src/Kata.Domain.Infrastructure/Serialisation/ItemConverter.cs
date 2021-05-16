@@ -58,10 +58,14 @@ namespace Kata.Domain.Infrastructure.Serialisation
 
         public override void Write(Utf8JsonWriter writer, Item value, JsonSerializerOptions options)
         {
+            writer.WriteStartObject();
+
             writer.WriteString("Id", value.Id);
             writer.WriteString("ParentId", value.ParentId);
             writer.WriteNumber("Price", value.Price);
             writer.WriteNumber("Quantity", value.Quantity);
+
+            writer.WriteEndObject();
         }
     }
 }

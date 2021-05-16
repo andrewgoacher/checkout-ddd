@@ -1,12 +1,13 @@
 ﻿using System;
 using Kata.Domain.Checkout;
+using Kata.Domain.Core;
 
 namespace KataApi.Services
 {
     /// <summary>
     /// Thrown when an item key does not exist
     /// </summary>
-    public class ItemNotFoundException : Exception
+    public class ItemNotFoundException : EntityNotFoundException
     {
         /// <summary>
         /// 

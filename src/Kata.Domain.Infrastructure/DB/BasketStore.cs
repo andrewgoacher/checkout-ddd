@@ -16,7 +16,7 @@ namespace KataApi.Domain.Infrastructure.DB
     {
         private readonly IMongoCollection<Basket> _basketCollection;
 
-        public static void RegisterClasses()
+        public static void RegisterClasses(IItemService itemService)
         {
             if (!BsonClassMap.IsClassMapRegistered(typeof(Description)))
             {
@@ -131,6 +131,7 @@ namespace KataApi.Domain.Infrastructure.DB
                 BsonClassMap.RegisterClassMap<Basket>(d =>
                 {
                     d.AutoMap();
+                    d.MapCreator(x => new Basket(itemService));
                 });
             }
         }

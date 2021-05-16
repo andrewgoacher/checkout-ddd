@@ -108,7 +108,7 @@ namespace KataApi
 
         private void MapDomainModels(IServiceProvider provider)
         {
-            BasketStore.RegisterClasses();
+            BasketStore.RegisterClasses(provider.GetService<IItemService>());
         }
     }
 }
