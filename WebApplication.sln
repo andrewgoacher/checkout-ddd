@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8B1D9102-915
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{00AA5783-C496-43CD-BA5C-5C8975CE467F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.UnitTests", "tests\Kata.UnitTests\Kata.UnitTests.csproj", "{FA4ED270-57EC-4E6E-A9BC-AB641C40D258}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.Domain.UnitTests", "tests\Kata.Domain.UnitTests\Kata.Domain.UnitTests.csproj", "{BD4CC8BB-13B8-4FB1-AA2D-8561383C72DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.IntegrationTests", "tests\Kata.IntegrationTests\Kata.IntegrationTests.csproj", "{1D6F608A-EC45-4E37-BB08-7703F019513F}"
@@ -29,10 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FA4ED270-57EC-4E6E-A9BC-AB641C40D258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA4ED270-57EC-4E6E-A9BC-AB641C40D258}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA4ED270-57EC-4E6E-A9BC-AB641C40D258}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA4ED270-57EC-4E6E-A9BC-AB641C40D258}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD4CC8BB-13B8-4FB1-AA2D-8561383C72DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD4CC8BB-13B8-4FB1-AA2D-8561383C72DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD4CC8BB-13B8-4FB1-AA2D-8561383C72DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,7 +49,6 @@ Global
 		{3506220F-E711-4553-9FD6-D271AB19D166}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{FA4ED270-57EC-4E6E-A9BC-AB641C40D258} = {00AA5783-C496-43CD-BA5C-5C8975CE467F}
 		{BD4CC8BB-13B8-4FB1-AA2D-8561383C72DF} = {00AA5783-C496-43CD-BA5C-5C8975CE467F}
 		{1D6F608A-EC45-4E37-BB08-7703F019513F} = {00AA5783-C496-43CD-BA5C-5C8975CE467F}
 		{9CB702F0-8EFC-4B5F-AE20-06AA31EC8CFA} = {8B1D9102-9158-493C-A27F-07D9B9E6C1C2}

@@ -14,6 +14,7 @@
     <Folder Include="Config\" />
     <Folder Include="DB\" />
     <Folder Include="Serialisation\" />
+    <Folder Include="DB\Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kata.Domain\Kata.Domain.csproj" />
@@ -27,5 +28,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
   </ItemGroup>
 </Project>

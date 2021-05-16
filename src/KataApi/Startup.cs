@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using Kata.Domain.Infrastructure.DB;
 using Kata.Domain.Infrastructure.Serialisation;
 using Kata.Domain.Services;
 using KataApi.Domain.Infrastructure.Config;
@@ -10,6 +11,7 @@ using KataApi.Middleware;
 using KataApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -63,17 +65,12 @@ namespace KataApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            // Database stuff
-            services.Configure<BasketStoreSettings>(
-                Configuration.GetSection(nameof(BasketStoreSettings)));
-
             // Domain service registration
-            services.AddScoped<IBasketStore, BasketStore>();
             services.AddSingleton<IItemService, ItemService>();
             services.AddSingleton<DiscountRuleService>();
             services.AddScoped<CheckoutApplicationService>();
 
-
+            services.RegisterInfrastructure(Configuration);
         }
 
         /// <summary>
@@ -102,6 +99,8 @@ namespace KataApi
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.EnsureCreated();
         }
     }
 }
