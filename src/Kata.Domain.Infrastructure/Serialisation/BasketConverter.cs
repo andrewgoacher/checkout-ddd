@@ -47,7 +47,7 @@ namespace Kata.Domain.Infrastructure.Serialisation
                             break;
                         case "Total":
                             // ignore this.
-                            reader.GetString();
+                            reader.GetDecimal();
                             break;
                         case "Items":
                         case "Discounts":

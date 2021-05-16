@@ -29,6 +29,8 @@ namespace Kata.Domain.Checkout
 
         public Quantity Quantity { get; private set; }
 
+        public Money GetTotal() => new Money(Price * Quantity);
+
         public void IncrementQuantity(Quantity qty)
         {
             Apply(new ItemEvents.IncrementQuantity

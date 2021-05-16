@@ -49,6 +49,9 @@ namespace Kata.Domain.Infrastructure.Serialisation
                         case "Quantity":
                             quantity = reader.GetInt32();
                             break;
+                        case "Total":
+                            reader.GetDecimal();
+                            break;
                     }
                 }
             }
@@ -64,6 +67,7 @@ namespace Kata.Domain.Infrastructure.Serialisation
             writer.WriteString("ParentId", value.ParentId);
             writer.WriteNumber("Price", value.Price);
             writer.WriteNumber("Quantity", value.Quantity);
+            writer.WriteNumber("Total", value.GetTotal());
 
             writer.WriteEndObject();
         }
