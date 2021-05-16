@@ -45,6 +45,10 @@ namespace Kata.Domain.Infrastructure.Serialisation
                         case "Id":
                             id = reader.GetString();
                             break;
+                        case "Total":
+                            // ignore this.
+                            reader.GetString();
+                            break;
                         case "Items":
                         case "Discounts":
                             {
@@ -85,6 +89,7 @@ namespace Kata.Domain.Infrastructure.Serialisation
             writer.WriteStartObject();
 
             writer.WriteString("Id", value.Id);
+            writer.WriteNumber("Total", value.GetTotal());
             writer.WriteStartArray("Items");
             foreach (var item in value.GetItems())
             {
