@@ -1,17 +1,12 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
-using Kata.Domain.Infrastructure.DB;
 using Kata.Domain.Infrastructure.Serialisation;
 using Kata.Domain.Services;
 using KataApi.Domain.Infrastructure.Config;
-using KataApi.Domain.Infrastructure.DB;
 using KataApi.Middleware;
-using KataApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -48,9 +43,7 @@ namespace KataApi
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
-                    // todo: This is a bit of a hack just to progress with the work
-                    // ideally need to figure out what the right approach would be
-                    var defaults = CustomSerialisationOptions.Get(new ItemService());
+                    var defaults = CustomSerialisationOptions.Get();
                     foreach (var converter in defaults.Converters)
                     {
                         options.JsonSerializerOptions.Converters.Add(converter);
@@ -66,7 +59,6 @@ namespace KataApi
             });
 
             // Domain service registration
-            services.AddSingleton<IItemService, ItemService>();
             services.AddSingleton<DiscountRuleService>();
             services.AddScoped<CheckoutApplicationService>();
 

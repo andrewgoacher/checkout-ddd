@@ -26,7 +26,6 @@
       </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Services\" />
       <Folder Include="ProblemDetails\" />
       <Folder Include="Middleware\" />
     </ItemGroup>

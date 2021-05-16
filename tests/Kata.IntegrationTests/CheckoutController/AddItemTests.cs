@@ -17,13 +17,11 @@ namespace Kata.IntegrationTests.CheckoutController
     public class AddItemTests : IDisposable
     {
         private readonly HttpClient _client;
-        private readonly IItemService _itemService;
         private bool disposedValue;
 
         public AddItemTests(TestServerFixture fixture)
         {
             _client = fixture.TestServer.CreateClient();
-            _itemService = fixture.GetService<IItemService>();
         }
 
         [Fact]
@@ -156,7 +154,7 @@ namespace Kata.IntegrationTests.CheckoutController
             using (var response = await _client.GetAsync($"/api/checkout/{id}"))
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                return System.Text.Json.JsonSerializer.Deserialize<Basket>(responseString, CustomSerialisationOptions.Get(_itemService));
+                return System.Text.Json.JsonSerializer.Deserialize<Basket>(responseString, CustomSerialisationOptions.Get());
             }
         }
 

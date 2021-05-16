@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using Kata.Domain.Checkout;
 using Kata.Domain.Services;
 
-namespace KataApi.Services
+namespace KataApi.Domain.Infrastructure.Services
 {
     using Item = Kata.Domain.Services.Models.Item;
 
     /// <summary>
     /// The checkout kata implementation of the item service.
     /// </summary>
-    public class ItemService : IItemService
+    internal class ItemService : IItemService
     {
         private readonly Dictionary<ItemId, Item> _items;
 

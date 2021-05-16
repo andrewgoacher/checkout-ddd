@@ -1,8 +1,7 @@
-﻿using System;
-using Kata.Domain.Checkout;
+﻿using Kata.Domain.Checkout;
 using Kata.Domain.Core;
 
-namespace KataApi.Services
+namespace KataApi.Domain.Infrastructure.Services
 {
     /// <summary>
     /// Thrown when an item key does not exist

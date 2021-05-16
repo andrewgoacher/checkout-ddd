@@ -1,12 +1,11 @@
-﻿using System;
-using Kata.Domain.Infrastructure.DB;
+﻿using Kata.Domain.Infrastructure.DB;
 using Kata.Domain.Services;
 using KataApi.Domain.Infrastructure.DB;
+using KataApi.Domain.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace KataApi.Domain.Infrastructure.Config
 {
@@ -20,6 +19,7 @@ namespace KataApi.Domain.Infrastructure.Config
             });
 
             services.AddScoped<IBasketStore, BasketStore>();
+            services.AddSingleton<IItemService, ItemService>();
 
             return services;
         }

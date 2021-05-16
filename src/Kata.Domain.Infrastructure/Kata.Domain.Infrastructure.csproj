@@ -15,6 +15,7 @@
     <Folder Include="DB\" />
     <Folder Include="Serialisation\" />
     <Folder Include="DB\Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kata.Domain\Kata.Domain.csproj" />
