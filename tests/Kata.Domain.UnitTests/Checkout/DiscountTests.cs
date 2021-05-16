@@ -20,7 +20,7 @@ namespace Kata.Domain.UnitTests.Checkout
             var desc = new Description("Test description");
             var amount = new Money(100);
 
-            var discount = Discount.NewDiscount(basket, id, desc, amount);
+            var discount = Discount.NewDiscount(basket.Id, id, desc, amount);
 
             Assert.Equal(basket.Id, discount.ParentId);
             Assert.Equal(id, discount.Id);

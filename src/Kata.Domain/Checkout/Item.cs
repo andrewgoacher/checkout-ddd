@@ -10,12 +10,12 @@ namespace Kata.Domain.Checkout
         {
         }
 
-        public static Item NewItem(Basket basket, ItemId id, Price price, Quantity qty)
+        public static Item NewItem(BasketId basket, ItemId id, Price price, Quantity qty)
         {
             var item = new Item();
             item.Apply(new ItemEvents.NewItem()
             {
-                ParentId = basket.Id,
+                ParentId = basket,
                 Price = price,
                 ItemId = id,
                 Quantity = qty

@@ -4,9 +4,16 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Config\" />
     <Folder Include="DB\" />
+    <Folder Include="Serialisation\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kata.Domain\Kata.Domain.csproj" />
@@ -14,5 +21,6 @@
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.12.3" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.2" />
   </ItemGroup>
 </Project>

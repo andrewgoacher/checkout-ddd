@@ -10,7 +10,7 @@ namespace Kata.Domain.Checkout
         {
         }
 
-        public static Discount NewDiscount(Basket parent, DiscountId id, Description desc, Money amount)
+        public static Discount NewDiscount(BasketId parent, DiscountId id, Description desc, Money amount)
         {
             var discount = new Discount();
             discount.Apply(new DiscountEvents.NewDiscount
@@ -18,7 +18,7 @@ namespace Kata.Domain.Checkout
                 Id = id,
                 Description = desc,
                 Amount = amount,
-                ParentId = parent.Id
+                ParentId = parent
             });
             return discount;
         }

@@ -35,6 +35,8 @@ namespace Kata.IntegrationTests.Fixtures
 
         public TestServer TestServer => _server;
 
+        public T GetService<T>() => (T)_server.Services.GetService(typeof(T));
+
         private static string GetTestBaseDir() =>
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

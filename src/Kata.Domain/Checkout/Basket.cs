@@ -33,6 +33,8 @@ namespace Kata.Domain.Checkout
 
         public IEnumerable<Item> GetItems() => _items.AsEnumerable();
 
+        public IEnumerable<Discount> GetDiscounts() => _discounts.AsEnumerable();
+
         public Money GetTotal() => new Money(_items.Sum(x => x.Price * x.Quantity) - _discounts.Sum(x => x.Amount));
 
         public async Task AddItemAsync(ItemId itemId, Quantity qty)
@@ -83,6 +85,25 @@ namespace Kata.Domain.Checkout
             return basket;
         }
 
+        public static Basket Load(IItemService itemService, BasketId id, IEnumerable<Item> items)
+        {
+            var basket = new Basket(itemService);
+            basket.Apply(new BasketEvents.NewBasket
+            {
+                Id = id
+            });
+            foreach (var item in items)
+            {
+                basket.Apply(new BasketEvents.AddItem
+                {
+                    ItemId = item.Id,
+                    Price = item.Price,
+                    Quantity = item.Quantity
+                });
+            }
+            return basket;
+        }
+
         public void ClearDiscounts()
         {
             Apply(new BasketEvents.RemoveDiscounts());
@@ -110,7 +131,7 @@ namespace Kata.Domain.Checkout
                     }
                 case BasketEvents.AddItem ai:
                     {
-                        _items.Add(Item.NewItem(this, new(ai.ItemId), new(ai.Price), new(ai.Quantity)));
+                        _items.Add(Item.NewItem(this.Id, new(ai.ItemId), new(ai.Price), new(ai.Quantity)));
                         ItemAdded?.Invoke(this, ai);
                         break;
                     }
@@ -143,7 +164,7 @@ namespace Kata.Domain.Checkout
                     }
                 case BasketEvents.AddDiscount d:
                     {
-                        _discounts.Add(Discount.NewDiscount(this, new(d.DiscountId), new(d.Description), new(d.Amount)));
+                        _discounts.Add(Discount.NewDiscount(this.Id, new(d.DiscountId), new(d.Description), new(d.Amount)));
                         break;
                     }
             }

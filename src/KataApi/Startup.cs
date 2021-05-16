@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using Kata.Domain.Infrastructure.Serialisation;
 using Kata.Domain.Services;
 using KataApi.Domain.Infrastructure.Config;
 using KataApi.Domain.Infrastructure.DB;
@@ -42,7 +43,17 @@ namespace KataApi
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    // todo: This is a bit of a hack just to progress with the work
+                    // ideally need to figure out what the right approach would be
+                    var defaults = CustomSerialisationOptions.Get(new ItemService());
+                    foreach (var converter in defaults.Converters)
+                    {
+                        options.JsonSerializerOptions.Converters.Add(converter);
+                    }
+                });
 
             services.AddSwaggerGen(c =>
             {

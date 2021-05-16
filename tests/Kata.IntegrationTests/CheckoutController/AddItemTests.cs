@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Kata.Domain.Checkout;
+using Kata.Domain.Infrastructure.Serialisation;
+using Kata.Domain.Services;
 using Kata.IntegrationTests.Fixtures;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
@@ -15,11 +17,13 @@ namespace Kata.IntegrationTests.CheckoutController
     public class AddItemTests : IDisposable
     {
         private readonly HttpClient _client;
+        private readonly IItemService _itemService;
         private bool disposedValue;
 
         public AddItemTests(TestServerFixture fixture)
         {
             _client = fixture.TestServer.CreateClient();
+            _itemService = fixture.GetService<IItemService>();
         }
 
         [Fact]
@@ -152,7 +156,7 @@ namespace Kata.IntegrationTests.CheckoutController
             using (var response = await _client.GetAsync($"/api/checkout/{id}"))
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                return System.Text.Json.JsonSerializer.Deserialize<Basket>(responseString);
+                return System.Text.Json.JsonSerializer.Deserialize<Basket>(responseString, CustomSerialisationOptions.Get(_itemService));
             }
         }
 

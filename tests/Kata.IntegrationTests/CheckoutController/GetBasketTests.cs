@@ -2,6 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Kata.Domain.Checkout;
+using Kata.Domain.Infrastructure.Serialisation;
+using Kata.Domain.Services;
 using Kata.IntegrationTests.Fixtures;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
@@ -12,11 +14,13 @@ namespace Kata.IntegrationTests.CheckoutController
     public class GetBasketTests : IDisposable
     {
         private readonly HttpClient _client;
+        private readonly IItemService _itemService;
         private bool disposedValue;
 
         public GetBasketTests(TestServerFixture fixture)
         {
             _client = fixture.TestServer.CreateClient();
+            _itemService = fixture.GetService<IItemService>();
         }
 
 
@@ -91,7 +95,7 @@ namespace Kata.IntegrationTests.CheckoutController
                 Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
 
                 var responseString = await response.Content.ReadAsStringAsync();
-                var basket = System.Text.Json.JsonSerializer.Deserialize<Basket>(responseString);
+                var basket = System.Text.Json.JsonSerializer.Deserialize<Basket>(responseString, CustomSerialisationOptions.Get(_itemService));
 
                 Assert.NotNull(basket);
                 Assert.Equal(new BasketId(id), basket.Id);

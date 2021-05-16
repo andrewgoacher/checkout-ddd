@@ -15,8 +15,8 @@ namespace Kata.Domain.UnitTests.Checkout
             var price = new Price(100);
             var quantity = new Quantity(1);
 
-            var item = Item.NewItem(basket, itemId, price, quantity);
-            
+            var item = Item.NewItem(basket.Id, itemId, price, quantity);
+
             Assert.Equal(basket.Id, item.ParentId);
             Assert.Equal(itemId, item.Id);
             Assert.Equal(price, item.Price);
@@ -33,7 +33,7 @@ namespace Kata.Domain.UnitTests.Checkout
 
             Assert.Throws<InvalidItemQuantityException>(() =>
             {
-                Item.NewItem(basket, itemId, price, quantity);
+                Item.NewItem(basket.Id, itemId, price, quantity);
             });
         }
 
@@ -45,7 +45,7 @@ namespace Kata.Domain.UnitTests.Checkout
             var price = new Price(100);
             var quantity = new Quantity(1);
 
-            var item = Item.NewItem(basket, itemId, price, quantity);
+            var item = Item.NewItem(basket.Id, itemId, price, quantity);
             item.IncrementQuantity(quantity);
 
             Assert.Equal(2, item.Quantity);
@@ -59,7 +59,7 @@ namespace Kata.Domain.UnitTests.Checkout
             var price = new Price(100);
             var quantity = new Quantity(1);
 
-            var item = Item.NewItem(basket, itemId, price, quantity);
+            var item = Item.NewItem(basket.Id, itemId, price, quantity);
             item.DecrementQuantity(quantity);
 
             Assert.Equal(0, item.Quantity);
