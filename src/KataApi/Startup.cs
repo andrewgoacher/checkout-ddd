@@ -95,8 +95,6 @@ namespace KataApi
                 err.Run(async ctx => await ExceptionMiddleware.Run(ctx));
             });
 
-            MapDomainModels(app.ApplicationServices);
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -104,11 +102,6 @@ namespace KataApi
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-        }
-
-        private void MapDomainModels(IServiceProvider provider)
-        {
-            BasketStore.RegisterClasses(provider.GetService<IItemService>());
         }
     }
 }
