@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder1", "SolutionFolder1", "{590669D0-20B8-4845-83E3-854F26AF9114}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -11,15 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8B1D9102-915
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{00AA5783-C496-43CD-BA5C-5C8975CE467F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.Domain.UnitTests", "tests\Kata.Domain.UnitTests\Kata.Domain.UnitTests.csproj", "{BD4CC8BB-13B8-4FB1-AA2D-8561383C72DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata.Domain.UnitTests", "tests\Kata.Domain.UnitTests\Kata.Domain.UnitTests.csproj", "{BD4CC8BB-13B8-4FB1-AA2D-8561383C72DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.IntegrationTests", "tests\Kata.IntegrationTests\Kata.IntegrationTests.csproj", "{1D6F608A-EC45-4E37-BB08-7703F019513F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata.IntegrationTests", "tests\Kata.IntegrationTests\Kata.IntegrationTests.csproj", "{1D6F608A-EC45-4E37-BB08-7703F019513F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.Domain", "src\Kata.Domain\Kata.Domain.csproj", "{9CB702F0-8EFC-4B5F-AE20-06AA31EC8CFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata.Domain", "src\Kata.Domain\Kata.Domain.csproj", "{9CB702F0-8EFC-4B5F-AE20-06AA31EC8CFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataApi", "src\KataApi\KataApi.csproj", "{8A01DC8F-6C54-4C6B-862D-DC7E9CCCDEDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KataApi", "src\KataApi\KataApi.csproj", "{8A01DC8F-6C54-4C6B-862D-DC7E9CCCDEDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.Domain.Infrastructure", "src\Kata.Domain.Infrastructure\Kata.Domain.Infrastructure.csproj", "{3506220F-E711-4553-9FD6-D271AB19D166}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata.Domain.Infrastructure", "src\Kata.Domain.Infrastructure\Kata.Domain.Infrastructure.csproj", "{3506220F-E711-4553-9FD6-D271AB19D166}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Kata.Domain.Fs", "Kata.Domain.Fs\Kata.Domain.Fs.fsproj", "{DD7E2D4D-9402-4D98-862D-22A5E12E2C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,13 @@ Global
 		{3506220F-E711-4553-9FD6-D271AB19D166}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3506220F-E711-4553-9FD6-D271AB19D166}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3506220F-E711-4553-9FD6-D271AB19D166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD7E2D4D-9402-4D98-862D-22A5E12E2C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD7E2D4D-9402-4D98-862D-22A5E12E2C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD7E2D4D-9402-4D98-862D-22A5E12E2C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD7E2D4D-9402-4D98-862D-22A5E12E2C80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BD4CC8BB-13B8-4FB1-AA2D-8561383C72DF} = {00AA5783-C496-43CD-BA5C-5C8975CE467F}
@@ -54,5 +65,9 @@ Global
 		{9CB702F0-8EFC-4B5F-AE20-06AA31EC8CFA} = {8B1D9102-9158-493C-A27F-07D9B9E6C1C2}
 		{8A01DC8F-6C54-4C6B-862D-DC7E9CCCDEDC} = {8B1D9102-9158-493C-A27F-07D9B9E6C1C2}
 		{3506220F-E711-4553-9FD6-D271AB19D166} = {8B1D9102-9158-493C-A27F-07D9B9E6C1C2}
+		{DD7E2D4D-9402-4D98-862D-22A5E12E2C80} = {8B1D9102-9158-493C-A27F-07D9B9E6C1C2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70D28DDA-270A-44F6-BF09-F951C529FF03}
 	EndGlobalSection
 EndGlobal
