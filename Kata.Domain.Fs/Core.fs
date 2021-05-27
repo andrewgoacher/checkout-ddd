@@ -18,6 +18,10 @@ module Money =
         else
             Ok <| Money amount
 
+    let toDecimal money =
+        let (Money m) = money
+        m
+
 module Price =
 
     let createPrice amount =

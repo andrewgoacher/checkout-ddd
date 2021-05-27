@@ -107,3 +107,51 @@ open Core
             match basketEvent with
             | BasketCreated id -> Ok { Id = id; Items = []; Discounts = []}
             | _ -> Error <| GenericError "Cannot process this event"
+
+        let total basket =
+            let itemsTotal =
+                basket.Items
+                |> List.map Item.total
+                |> List.map Money.toDecimal
+                |> List.sum
+            let discountsTotal =
+                basket.Discounts
+                |> List.map (fun (discount: Discount) -> discount.Amount)
+                |> List.map Money.toDecimal
+                |> List.sum
+            Money.createMoney (itemsTotal - discountsTotal)
+
+        let rec apply basket (evt: CheckoutEvent) =
+            match evt with
+            | BasketEvent e ->
+                match e with
+                | ItemAdded (itemId, price, quantity) ->
+                    let existingItem =
+                        basket.Items
+                        |> List.exists (fun (item:Item) -> item.Id = itemId)
+                    if existingItem then
+                        let newEvt = ItemQuantityIncreased (itemId, quantity)
+                        apply basket (BasketEvent newEvt)
+                    else
+                        let item = Item.newItem (ItemCreated (basket.Id, itemId, price, quantity))
+                        match item with
+                        | Error e -> Error e
+                        | Ok i ->
+                            let items = i :: basket.Items
+                            Ok { basket with Items = items }
+                | DiscountsRemoved -> Ok { basket with Discounts = [] }
+                | DiscountAdded (id, amount, desc) ->
+                    let discountEvent = DiscountCreated (id, basket.Id, desc, amount)
+                    let discount = Discount.newDiscount discountEvent
+                    match discount with
+                    | Error e -> Error e
+                    | Ok dis ->
+                        let discounts = dis :: basket.Discounts
+                        Ok { basket with Discounts = discounts }
+                | ItemQuantityIncreased (itemId, quantity) ->
+                    // todo: Update me
+                    Ok basket
+                | ItemQuantityReduced (itemId, quantity) ->
+                    // todo: Update me
+                    Ok basket
+            | _ -> Error <| GenericError "Unable to process event"
